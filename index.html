@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Awa Odori Festival Experience - Emoterrain</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Animated background particles -->
+    <div class="particles"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="header-left">
+                    <button class="back-btn">
+                        <span class="icon">←</span>
+                        BACK TO FEED
+                    </button>
+                    <div class="title-section">
+                        <div class="logo">❤️</div>
+                        <h1>EXPERIENCE DETAIL</h1>
+                    </div>
+                </div>
+                <div class="current-time" id="currentTime"></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <!-- Video Section -->
+        <div class="video-section">
+            <div class="video-container">
+                <div class="video-thumbnail"></div>
+                <div class="video-overlay"></div>
+                
+                <!-- Play button -->
+                <div class="play-button-container">
+                    <button class="play-button" id="playButton">
+                        <span class="play-icon">▶</span>
+                    </button>
+                </div>
+
+                <!-- Title overlay -->
+                <div class="title-overlay">
+                    <div class="title-content">
+                        <div class="title-left">
+                            <h2 class="experience-title">Awa Odori Festival Experience</h2>
+                            <p class="experience-subtitle">Tokushima Awa Odori - 400 Years of Traditional Japanese Dance Magic</p>
+                        </div>
+                        <div class="title-right">
+                            <div class="duration-card">
+                                <div class="duration-label">Duration</div>
+                                <div class="duration-value">3h 30m</div>
+                            </div>
+                            <div class="status-badge">
+                                ● LIVE
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab active" data-tab="overview">
+                <span class="tab-icon">❤️</span>
+                <span>OVERVIEW</span>
+            </button>
+            <button class="tab" data-tab="emotibers">
+                <span class="tab-icon">👑</span>
+                <span>EMOTIBERS</span>
+            </button>
+            <button class="tab" data-tab="history">
+                <span class="tab-icon">📅</span>
+                <span>HISTORY</span>
+            </button>
+        </div>
+
+        <!-- Tab Content -->
+        <div class="tab-content">
+            <!-- Overview Tab -->
+            <div class="tab-panel active" id="overview">
+                <!-- Emotion Analysis -->
+                <div class="card">
+                    <h3 class="card-title">
+                        <span class="title-icon">💖</span>
+                        EMOTION ANALYSIS
+                    </h3>
+                    <div class="emotion-grid">
+                        <div class="emotion-meter large">
+                            <div class="emotion-circle">
+                                <svg class="circle-svg" viewBox="0 0 36 36">
+                                    <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                                    <path class="circle-fg excitement" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" stroke-dasharray="96, 100"></path>
+                                </svg>
+                                <div class="circle-content">
+                                    <span class="emotion-icon">🔥</span>
+                                    <span class="emotion-value">96%</span>
+                                </div>
+                            </div>
+                            <div class="emotion-label">EXCITEMENT</div>
+                        </div>
+                        <div class="emotion-meter">
+                            <div class="emotion-circle">
+                                <svg class="circle-svg" viewBox="0 0 36 36">
+                                    <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                                    <path class="circle-fg unity" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" stroke-dasharray="91, 100"></path>
+                                </svg>
+                                <div class="circle-content">
+                                    <span class="emotion-icon">🤝</span>
+                                    <span class="emotion-value">91%</span>
+                                </div>
+                            </div>
+                            <div class="emotion-label">UNITY</div>
+                        </div>
+                        <div class="emotion-meter">
+                            <div class="emotion-circle">
+                                <svg class="circle-svg" viewBox="0 0 36 36">
+                                    <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                                    <path class="circle-fg tradition" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" stroke-dasharray="88, 100"></path>
+                                </svg>
+                                <div class="circle-content">
+                                    <span class="emotion-icon">🏮</span>
+                                    <span class="emotion-value">88%</span>
+                                </div>
+                            </div>
+                            <div class="emotion-label">TRADITION</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Basic Info and Highlights -->
+                <div class="info-grid">
+                    <div class="card">
+                        <h3 class="card-title">EXPERIENCE INFO</h3>
+                        <div class="info-list">
+                            <div class="info-item">
+                                <span class="info-label">📍 Location:</span>
+                                <span class="info-value">🇯🇵 Tokushima City Center</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">👥 Participants:</span>
+                                <span class="info-value">8,450</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">📅 Duration:</span>
+                                <span class="info-value">3h 30m</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Status:</span>
+                                <span class="info-value live">LIVE</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3 class="card-title">HIGHLIGHTS</h3>
+                        <div class="highlights-list">
+                            <div class="highlight-item">
+                                <div class="highlight-bullet"></div>
+                                <span>Experience 400 years of traditional performing arts up close</span>
+                            </div>
+                            <div class="highlight-item">
+                                <div class="highlight-bullet"></div>
+                                <span>Powerful performances by famous dance troupes (ren)</span>
+                            </div>
+                            <div class="highlight-item">
+                                <div class="highlight-bullet"></div>
+                                <span>Interactive dance experience corners for audience participation</span>
+                            </div>
+                            <div class="highlight-item">
+                                <div class="highlight-bullet"></div>
+                                <span>Live performances of traditional Japanese instruments</span>
+                            </div>
+                            <div class="highlight-item">
+                                <div class="highlight-bullet"></div>
+                                <span>Rich variety of local Tokushima food stalls and delicacies</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div class="card">
+                    <h3 class="card-title">DESCRIPTION</h3>
+                    <p class="description">
+                        Immerse yourself in one of Japan's three great traditional Bon dances. Experience the captivating Awa Odori festival that lights up Tokushima's summer nights. Embodying the spirit of "You're a fool whether you dance or watch, so you might as well dance!", spectators are invited to join the dancing circles. Enjoy the spectacular sight of colorfully dressed yukata-clad dancers parading through the streets, accompanied by live performances of traditional instruments including taiko drums, shamisen, and flutes.
+                    </p>
+                    <div class="tags">
+                        <span class="tag">Traditional Dance</span>
+                        <span class="tag">Japanese Culture</span>
+                        <span class="tag">Festival</span>
+                        <span class="tag">Community</span>
+                        <span class="tag">Heritage</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Emotibers Tab -->
+            <div class="tab-panel" id="emotibers">
+                <div class="card">
+                    <h3 class="card-title">
+                        <span class="title-icon">👑</span>
+                        TOP EMOTIBERS
+                    </h3>
+                    <div class="emotibers-grid" id="emotibersGrid"></div>
+                    <div class="info-note">
+                        <div class="note-title">💡 Emotiber System:</div>
+                        <p>Scores are calculated based on the quality and depth of emotional experiences, determining your ranking. The stronger your emotional responses, the higher you rank on the leaderboard.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- History Tab -->
+            <div class="tab-panel" id="history">
+                <div class="card">
+                    <h3 class="card-title">EVENT HISTORY</h3>
+                    <div class="history-list" id="historyList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 現在時刻の更新
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('currentTime').textContent = now.toLocaleString('en-US');
+        }
+        
+        setInterval(updateTime, 1000);
+        updateTime();
+
+        // パーティクルアニメーション
+        function createParticles() {
+            const particles = document.querySelector('.particles');
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 5 + 's';
+                particle.style.animationDuration = (2 + Math.random() * 6) + 's';
+                particles.appendChild(particle);
+            }
+        }
+        
+        createParticles();
+
+        // タブ切り替え
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetTab = tab.getAttribute('data-tab');
+                
+                // タブのアクティブ状態を更新
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                // パネルの表示を更新
+                document.querySelectorAll('.tab-panel').forEach(panel => {
+                    panel.classList.remove('active');
+                });
+                document.getElementById(targetTab).classList.add('active');
+            });
+        });
+
+        // プレイボタン
+        document.getElementById('playButton').addEventListener('click', () => {
+            const button = document.getElementById('playButton');
+            button.classList.toggle('playing');
+        });
+
+        // Emotibersデータ
+        const topEmotibers = [
+            {
+                rank: 1,
+                name: 'AwaOdoriKing',
+                avatar: '🏮',
+                emotionScore: 9847,
+                badge: 'LEGEND',
+                badgeColor: 'gold',
+                primaryEmotion: 'EXCITEMENT',
+                level: 25,
+                experiences: 142
+            },
+            {
+                rank: 2,
+                name: 'TokushimaSoul',
+                avatar: '🥁',
+                emotionScore: 9123,
+                badge: 'MASTER',
+                badgeColor: 'purple',
+                primaryEmotion: 'UNITY',
+                level: 23,
+                experiences: 98
+            },
+            {
+                rank: 3,
+                name: 'DanceSpirit',
+                avatar: '💃',
+                emotionScore: 8654,
+                badge: 'EXPERT',
+                badgeColor: 'blue',
+                primaryEmotion: 'TRADITION',
+                level: 21,
+                experiences: 87
+            },
+            {
+                rank: 4,
+                name: 'FestivalHeart',
+                avatar: '🎭',
+                emotionScore: 8234,
+                badge: 'PRO',
+                badgeColor: 'green',
+                primaryEmotion: 'EXCITEMENT',
+                level: 19,
+                experiences: 76
+            },
+            {
+                rank: 5,
+                name: 'TraditionKeeper',
+                avatar: '🎌',
+                emotionScore: 7892,
+                badge: 'ADVANCED',
+                badgeColor: 'red',
+                primaryEmotion: 'UNITY',
+                level: 18,
+                experiences: 65
+            }
+        ];
+
+        // Historyデータ
+        const history = [
+            { date: '2024-11-01', event: 'Partnership with Awa Odori Dance Troupe established', type: 'planning' },
+            { date: '2024-12-15', event: 'Event planning officially approved', type: 'planning' },
+            { date: '2025-01-10', event: 'Participant registration opens', type: 'sales' },
+            { date: '2025-02-20', event: 'Full capacity reached - Registration closed', type: 'milestone' },
+            { date: '2025-03-01', event: 'Pre-event practice session held', type: 'preparation' },
+            { date: '2025-03-15', event: 'Festival begins', type: 'start' }
+        ];
+
+        // Emotibersを描画
+        function renderEmotibers() {
+            const grid = document.getElementById('emotibersGrid');
+            grid.innerHTML = topEmotibers.map(emotiber => `
+                <div class="emotiber-card">
+                    <div class="emotiber-header">
+                        <div class="emotiber-info">
+                            <div class="emotiber-avatar-container">
+                                <div class="emotiber-avatar">${emotiber.avatar}</div>
+                                <div class="rank-icon">${emotiber.rank === 1 ? '👑' : emotiber.rank === 2 ? '🏆' : emotiber.rank === 3 ? '🥉' : '⭐'}</div>
+                            </div>
+                            <div class="emotiber-details">
+                                <h4 class="emotiber-name">${emotiber.name}</h4>
+                                <div class="emotiber-level">Level ${emotiber.level}</div>
+                            </div>
+                        </div>
+                        <div class="emotiber-rank">#${emotiber.rank}</div>
+                    </div>
+                    <div class="emotiber-badge ${emotiber.badgeColor}">
+                        ${emotiber.badge}
+                    </div>
+                    <div class="emotiber-stats">
+                        <div class="stat">
+                            <div class="stat-value">${emotiber.emotionScore.toLocaleString()}</div>
+                            <div class="stat-label">SCORE</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">${emotiber.experiences}</div>
+                            <div class="stat-label">EXP</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">${emotiber.primaryEmotion}</div>
+                            <div class="stat-label">PRIMARY</div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Historyを描画
+        function renderHistory() {
+            const list = document.getElementById('historyList');
+            list.innerHTML = history.map(item => `
+                <div class="history-item">
+                    <div class="history-date">${item.date}</div>
+                    <div class="history-dot ${item.type}"></div>
+                    <div class="history-event">${item.event}</div>
+                </div>
+            `).join('');
+        }
+
+        // 初期化
+        renderEmotibers();
+        renderHistory();
+    </script>
+</body>
+</html>
