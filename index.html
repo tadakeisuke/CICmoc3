@@ -133,21 +133,80 @@
             cursor: pointer;
             font-size: 1rem;
         }
-        .yui-view {
+        .friends-ranking {
             display: none;
             max-width: 400px;
             margin: 2rem auto;
             background: #111827;
             border-radius: 16px;
             box-shadow: 0 4px 24px rgba(34,211,238,0.08);
-            padding: 1.5rem;
+            padding: 1.5rem 1rem 1.5rem 1rem;
+        }
+        .friends-ranking .leaderboard-title {
+            display: flex;
+            align-items: center;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #38bdf8;
+            margin-bottom: 1.2rem;
+            letter-spacing: 0.08em;
+        }
+        .friends-ranking .leaderboard-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .friends-ranking .leaderboard-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #1e293b;
+            border-radius: 10px;
+            margin-bottom: 0.7rem;
+            padding: 1rem 1.2rem;
+            font-size: 1.1rem;
+            box-shadow: 0 2px 8px rgba(34,211,238,0.04);
+            border: 2px solid transparent;
+            transition: box-shadow 0.2s, border-color 0.2s;
+        }
+        .friends-ranking .face-photo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 1rem;
+        }
+        .friends-ranking .rank-icon {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-right: 1.1rem;
+            width: 2.2rem;
             text-align: center;
         }
-        .yui-photo {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            margin-bottom: 1rem;
+        .friends-ranking .leaderboard-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .friends-ranking .leaderboard-name {
+            font-weight: bold;
+            color: #fbbf24;
+            font-size: 1.1rem;
+        }
+        .friends-ranking .leaderboard-streak {
+            font-size: 0.95rem;
+            color: #f87171;
+            margin-top: 0.2rem;
+            display: flex;
+            align-items: center;
+        }
+        .friends-ranking .flame {
+            font-size: 1.1rem;
+            margin-right: 0.2rem;
+        }
+        .friends-ranking .leaderboard-score {
+            font-weight: bold;
+            font-size: 1.3rem;
+            color: #4ade80;
         }
         @media (max-width: 600px) {
             .leaderboard-section {
@@ -198,7 +257,7 @@
         </div>
     </header>
     <!-- Switch Button -->
-    <button class="switch-btn" id="switchBtn">Switch to Yui View</button>
+    <button class="switch-btn" id="switchBtn">Switch to Friends Ranking</button>
     <!-- Main content -->
     <div class="main-content">
         <!-- Leaderboard Section -->
@@ -221,7 +280,7 @@
                     <img src="https://via.placeholder.com/50" alt="face" class="face-photo">
                     <div class="rank-icon">🥈</div>
                     <div class="leaderboard-info">
-                        <span class="leaderboard-name">Maria...</span>
+                        <span class="leaderboard-name">Maria Garcia</span>
                         <span class="leaderboard-streak"><span class="flame">🔥</span> 8 win streak</span>
                     </div>
                     <span class="leaderboard-score">92%</span>
@@ -230,7 +289,7 @@
                     <img src="https://via.placeholder.com/50" alt="face" class="face-photo">
                     <div class="rank-icon">🥉</div>
                     <div class="leaderboard-info">
-                        <span class="leaderboard-name">Chen Wei</span>
+                        <span class="leaderboard-name">John Smith</span>
                         <span class="leaderboard-streak"><span class="flame">🔥</span> 15 win streak</span>
                     </div>
                     <span class="leaderboard-score">89%</span>
@@ -239,7 +298,7 @@
                     <img src="https://via.placeholder.com/50" alt="face" class="face-photo">
                     <div class="rank-icon">4</div>
                     <div class="leaderboard-info">
-                        <span class="leaderboard-name">Yui (YOU)</span>
+                        <span class="leaderboard-name">Tada (YOU)</span>
                         <span class="leaderboard-streak"><span class="flame">🔥</span> 7 win streak</span>
                     </div>
                     <span class="leaderboard-score">85%</span>
@@ -248,22 +307,66 @@
                     <img src="https://via.placeholder.com/50" alt="face" class="face-photo">
                     <div class="rank-icon">5</div>
                     <div class="leaderboard-info">
-                        <span class="leaderboard-name">Priya Patel</span>
+                        <span class="leaderboard-name">Emily Davis</span>
                         <span class="leaderboard-streak"><span class="flame">🔥</span> 4 win streak</span>
                     </div>
                     <span class="leaderboard-score">81%</span>
                 </li>
             </ul>
         </section>
-        <!-- Yui Unique View -->
-        <section class="yui-view" id="yuiView">
-            <h2>Yui's Profile</h2>
-            <img src="https://via.placeholder.com/100" alt="Yui's face" class="yui-photo">
-            <p>Name: Yui</p>
-            <p>Rank: 4th</p>
-            <p>Score: 85%</p>
-            <p>Win Streak: 7</p>
-            <p>This is Yui's unique profile page.</p>
+        <!-- Friends Ranking Section -->
+        <section class="friends-ranking" id="friendsView">
+            <div class="leaderboard-title">
+                <i data-feather="users" style="color: #fbbf24; margin-right: 8px;"></i>
+                <span>Friends Ranking</span>
+            </div>
+            <ul class="leaderboard-list">
+                <li class="leaderboard-item first">
+                    <img src="https://via.placeholder.com/50" alt="face" class="face-photo">
+                    <div class="rank-icon">🥇</div>
+                    <div class="leaderboard-info">
+                        <span class="leaderboard-name">Tada (YOU)</span>
+                        <span class="leaderboard-streak"><span class="flame">🔥</span> 7 win streak</span>
+                    </div>
+                    <span class="leaderboard-score">85%</span>
+                </li>
+                <li class="leaderboard-item second">
+                    <img src="https://via.placeholder.com/50" alt="face" class="face-photo">
+                    <div class="rank-icon">🥈</div>
+                    <div class="leaderboard-info">
+                        <span class="leaderboard-name">Alex Johnson</span>
+                        <span class="leaderboard-streak"><span class="flame">🔥</span> 12 win streak</span>
+                    </div>
+                    <span class="leaderboard-score">94%</span>
+                </li>
+                <li class="leaderboard-item third">
+                    <img src="https://via.placeholder.com/50" alt="face" class="face-photo">
+                    <div class="rank-icon">🥉</div>
+                    <div class="leaderboard-info">
+                        <span class="leaderboard-name">Maria Garcia</span>
+                        <span class="leaderboard-streak"><span class="flame">🔥</span> 8 win streak</span>
+                    </div>
+                    <span class="leaderboard-score">92%</span>
+                </li>
+                <li class="leaderboard-item">
+                    <img src="https://via.placeholder.com/50" alt="face" class="face-photo">
+                    <div class="rank-icon">4</div>
+                    <div class="leaderboard-info">
+                        <span class="leaderboard-name">John Smith</span>
+                        <span class="leaderboard-streak"><span class="flame">🔥</span> 15 win streak</span>
+                    </div>
+                    <span class="leaderboard-score">89%</span>
+                </li>
+                <li class="leaderboard-item">
+                    <img src="https://via.placeholder.com/50" alt="face" class="face-photo">
+                    <div class="rank-icon">5</div>
+                    <div class="leaderboard-info">
+                        <span class="leaderboard-name">Emily Davis</span>
+                        <span class="leaderboard-streak"><span class="flame">🔥</span> 4 win streak</span>
+                    </div>
+                    <span class="leaderboard-score">81%</span>
+                </li>
+            </ul>
         </section>
         <!-- ...existing code... -->
     </div>
@@ -272,20 +375,20 @@
         // Switch view functionality
         const switchBtn = document.getElementById('switchBtn');
         const leaderboardView = document.getElementById('leaderboardView');
-        const yuiView = document.getElementById('yuiView');
-        let isYuiView = false;
+        const friendsView = document.getElementById('friendsView');
+        let isFriendsView = false;
 
         switchBtn.addEventListener('click', () => {
-            if (isYuiView) {
+            if (isFriendsView) {
                 leaderboardView.style.display = 'block';
-                yuiView.style.display = 'none';
-                switchBtn.textContent = 'Switch to Yui View';
+                friendsView.style.display = 'none';
+                switchBtn.textContent = 'Switch to Friends Ranking';
             } else {
                 leaderboardView.style.display = 'none';
-                yuiView.style.display = 'block';
-                switchBtn.textContent = 'Switch to Leaderboard';
+                friendsView.style.display = 'block';
+                switchBtn.textContent = 'Switch to Global Ranking';
             }
-            isYuiView = !isYuiView;
+            isFriendsView = !isFriendsView;
         });
     </script>
 </body>
