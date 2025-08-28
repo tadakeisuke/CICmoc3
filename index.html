@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Emoterrain - 体験詳細画面</title>
+    <title>Emoterrain - Experience Detail</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.js"></script>
     <style>
         /* Leaderboard Section Styles */
@@ -65,6 +65,12 @@
             width: 2.2rem;
             text-align: center;
         }
+        .face-photo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 1rem;
+        }
         .leaderboard-info {
             flex: 1;
             display: flex;
@@ -115,6 +121,34 @@
         .leaderboard-item.you .leaderboard-score {
             color: #60a5fa;
         }
+        .switch-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #38bdf8;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .yui-view {
+            display: none;
+            max-width: 400px;
+            margin: 2rem auto;
+            background: #111827;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(34,211,238,0.08);
+            padding: 1.5rem;
+            text-align: center;
+        }
+        .yui-photo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+        }
         @media (max-width: 600px) {
             .leaderboard-section {
                 max-width: 98vw;
@@ -138,11 +172,11 @@
             position: relative;
             overflow-x: hidden;
         }
-        /* ...省略...（motoneta.tsxのCSS全て）... */
+        /* ...existing code... */
     </style>
 </head>
 <body>
-    <!-- ...既存のHTML構造...（motoneta.tsxの内容をそのまま）... -->
+    <!-- ...existing code... -->
     <!-- Background particles -->
     <div id="particles"></div>
     <!-- Header -->
@@ -163,61 +197,96 @@
             <div class="current-time" id="currentTime"></div>
         </div>
     </header>
+    <!-- Switch Button -->
+    <button class="switch-btn" id="switchBtn">Switch to Yui View</button>
     <!-- Main content -->
     <div class="main-content">
         <!-- Leaderboard Section -->
-        <section class="leaderboard-section">
+        <section class="leaderboard-section" id="leaderboardView">
             <div class="leaderboard-title">
                 <i data-feather="award" style="color: #fbbf24; margin-right: 8px;"></i>
                 <span>Leaderboard</span>
             </div>
             <ul class="leaderboard-list">
                 <li class="leaderboard-item first">
+                    <img src="https://via.placeholder.com/50" alt="face" class="face-photo">
                     <div class="rank-icon">🥇</div>
                     <div class="leaderboard-info">
                         <span class="leaderboard-name">Alex Johnson</span>
-                        <span class="leaderboard-streak"><span class="flame">🔥</span> 12連勝中</span>
+                        <span class="leaderboard-streak"><span class="flame">🔥</span> 12 win streak</span>
                     </div>
                     <span class="leaderboard-score">94%</span>
                 </li>
                 <li class="leaderboard-item second">
+                    <img src="https://via.placeholder.com/50" alt="face" class="face-photo">
                     <div class="rank-icon">🥈</div>
                     <div class="leaderboard-info">
                         <span class="leaderboard-name">Maria...</span>
-                        <span class="leaderboard-streak"><span class="flame">🔥</span> 8連勝中</span>
+                        <span class="leaderboard-streak"><span class="flame">🔥</span> 8 win streak</span>
                     </div>
                     <span class="leaderboard-score">92%</span>
                 </li>
                 <li class="leaderboard-item third">
+                    <img src="https://via.placeholder.com/50" alt="face" class="face-photo">
                     <div class="rank-icon">🥉</div>
                     <div class="leaderboard-info">
                         <span class="leaderboard-name">Chen Wei</span>
-                        <span class="leaderboard-streak"><span class="flame">🔥</span> 15連勝中</span>
+                        <span class="leaderboard-streak"><span class="flame">🔥</span> 15 win streak</span>
                     </div>
                     <span class="leaderboard-score">89%</span>
                 </li>
                 <li class="leaderboard-item you">
+                    <img src="https://via.placeholder.com/50" alt="face" class="face-photo">
                     <div class="rank-icon">4</div>
                     <div class="leaderboard-info">
-                        <span class="leaderboard-name">TADA (YOU)</span>
-                        <span class="leaderboard-streak"><span class="flame">🔥</span> 7連勝中</span>
+                        <span class="leaderboard-name">Yui (YOU)</span>
+                        <span class="leaderboard-streak"><span class="flame">🔥</span> 7 win streak</span>
                     </div>
                     <span class="leaderboard-score">85%</span>
                 </li>
                 <li class="leaderboard-item">
+                    <img src="https://via.placeholder.com/50" alt="face" class="face-photo">
                     <div class="rank-icon">5</div>
                     <div class="leaderboard-info">
                         <span class="leaderboard-name">Priya Patel</span>
-                        <span class="leaderboard-streak"><span class="flame">🔥</span> 4連勝中</span>
+                        <span class="leaderboard-streak"><span class="flame">🔥</span> 4 win streak</span>
                     </div>
                     <span class="leaderboard-score">81%</span>
                 </li>
             </ul>
         </section>
-        <!-- ...（motoneta.tsxの内容を全て展開）... -->
+        <!-- Yui Unique View -->
+        <section class="yui-view" id="yuiView">
+            <h2>Yui's Profile</h2>
+            <img src="https://via.placeholder.com/100" alt="Yui's face" class="yui-photo">
+            <p>Name: Yui</p>
+            <p>Rank: 4th</p>
+            <p>Score: 85%</p>
+            <p>Win Streak: 7</p>
+            <p>This is Yui's unique profile page.</p>
+        </section>
+        <!-- ...existing code... -->
     </div>
     <script>
-        // ...既存のJS...（motoneta.tsxの内容をそのまま）...
+        // ...existing code... 
+        // Switch view functionality
+        const switchBtn = document.getElementById('switchBtn');
+        const leaderboardView = document.getElementById('leaderboardView');
+        const yuiView = document.getElementById('yuiView');
+        let isYuiView = false;
+
+        switchBtn.addEventListener('click', () => {
+            if (isYuiView) {
+                leaderboardView.style.display = 'block';
+                yuiView.style.display = 'none';
+                switchBtn.textContent = 'Switch to Yui View';
+            } else {
+                leaderboardView.style.display = 'none';
+                yuiView.style.display = 'block';
+                switchBtn.textContent = 'Switch to Leaderboard';
+            }
+            isYuiView = !isYuiView;
+        });
     </script>
 </body>
 </html>
