@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emoterrain - 体験詳細画面</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.js"></script>
+    <style>
+        /* Leaderboard Section Styles */
+        .leaderboard-section {
+            max-width: 400px;
+            margin: 2rem auto 2.5rem auto;
+            background: #111827;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(34,211,238,0.08);
+            padding: 1.5rem 1rem 1.5rem 1rem;
+        }
+        .leaderboard-title {
+            display: flex;
+            align-items: center;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #38bdf8;
+            margin-bottom: 1.2rem;
+            letter-spacing: 0.08em;
+        }
+        .leaderboard-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .leaderboard-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #1e293b;
+            border-radius: 10px;
+            margin-bottom: 0.7rem;
+            padding: 1rem 1.2rem;
+            font-size: 1.1rem;
+            box-shadow: 0 2px 8px rgba(34,211,238,0.04);
+            border: 2px solid transparent;
+            transition: box-shadow 0.2s, border-color 0.2s;
+        }
+        .leaderboard-item.first {
+            background: #292524;
+            border-color: #fbbf24;
+        }
+        .leaderboard-item.second {
+            background: #1e293b;
+            border-color: #38bdf8;
+        }
+        .leaderboard-item.third {
+            background: #1e293b;
+            border-color: #22d3ee;
+        }
+        .leaderboard-item.you {
+            background: #0f172a;
+            border-color: #64748b;
+        }
+        .leaderboard-item .rank-icon {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-right: 1.1rem;
+            width: 2.2rem;
+            text-align: center;
+        }
+        .leaderboard-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .leaderboard-name {
+            font-weight: bold;
+            color: #fbbf24;
+            font-size: 1.1rem;
+        }
+        .leaderboard-item.second .leaderboard-name {
+            color: #38bdf8;
+        }
+        .leaderboard-item.third .leaderboard-name {
+            color: #22d3ee;
+        }
+        .leaderboard-item.you .leaderboard-name {
+            color: #60a5fa;
+        }
+        .leaderboard-item:not(.first):not(.second):not(.third):not(.you) .leaderboard-name {
+            color: #22d3ee;
+        }
+        .leaderboard-streak {
+            font-size: 0.95rem;
+            color: #f87171;
+            margin-top: 0.2rem;
+            display: flex;
+            align-items: center;
+        }
+        .flame {
+            font-size: 1.1rem;
+            margin-right: 0.2rem;
+        }
+        .leaderboard-score {
+            font-weight: bold;
+            font-size: 1.3rem;
+            color: #4ade80;
+        }
+        .leaderboard-item.first .leaderboard-score {
+            color: #fbbf24;
+        }
+        .leaderboard-item.second .leaderboard-score {
+            color: #38bdf8;
+        }
+        .leaderboard-item.third .leaderboard-score {
+            color: #22d3ee;
+        }
+        .leaderboard-item.you .leaderboard-score {
+            color: #60a5fa;
+        }
+        @media (max-width: 600px) {
+            .leaderboard-section {
+                max-width: 98vw;
+                padding: 1rem 0.2rem;
+            }
+            .leaderboard-item {
+                padding: 0.7rem 0.5rem;
+                font-size: 1rem;
+            }
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #1f2937 0%, #000000 50%, #1f2937 100%);
+            color: white;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        /* ...省略...（motoneta.tsxのCSS全て）... */
+    </style>
+</head>
+<body>
+    <!-- ...既存のHTML構造...（motoneta.tsxの内容をそのまま）... -->
+    <!-- Background particles -->
+    <div id="particles"></div>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="header-left">
+                <button class="back-btn">
+                    <i data-feather="arrow-left"></i>
+                    BACK TO FEED
+                </button>
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i data-feather="heart"></i>
+                    </div>
+                    <h1 class="logo-text">EXPERIENCE DETAIL</h1>
+                </div>
+            </div>
+            <div class="current-time" id="currentTime"></div>
+        </div>
+    </header>
+    <!-- Main content -->
+    <div class="main-content">
+        <!-- Leaderboard Section -->
+        <section class="leaderboard-section">
+            <div class="leaderboard-title">
+                <i data-feather="award" style="color: #fbbf24; margin-right: 8px;"></i>
+                <span>Leaderboard</span>
+            </div>
+            <ul class="leaderboard-list">
+                <li class="leaderboard-item first">
+                    <div class="rank-icon">🥇</div>
+                    <div class="leaderboard-info">
+                        <span class="leaderboard-name">Alex Johnson</span>
+                        <span class="leaderboard-streak"><span class="flame">🔥</span> 12連勝中</span>
+                    </div>
+                    <span class="leaderboard-score">94%</span>
+                </li>
+                <li class="leaderboard-item second">
+                    <div class="rank-icon">🥈</div>
+                    <div class="leaderboard-info">
+                        <span class="leaderboard-name">Maria...</span>
+                        <span class="leaderboard-streak"><span class="flame">🔥</span> 8連勝中</span>
+                    </div>
+                    <span class="leaderboard-score">92%</span>
+                </li>
+                <li class="leaderboard-item third">
+                    <div class="rank-icon">🥉</div>
+                    <div class="leaderboard-info">
+                        <span class="leaderboard-name">Chen Wei</span>
+                        <span class="leaderboard-streak"><span class="flame">🔥</span> 15連勝中</span>
+                    </div>
+                    <span class="leaderboard-score">89%</span>
+                </li>
+                <li class="leaderboard-item you">
+                    <div class="rank-icon">4</div>
+                    <div class="leaderboard-info">
+                        <span class="leaderboard-name">TADA (YOU)</span>
+                        <span class="leaderboard-streak"><span class="flame">🔥</span> 7連勝中</span>
+                    </div>
+                    <span class="leaderboard-score">85%</span>
+                </li>
+                <li class="leaderboard-item">
+                    <div class="rank-icon">5</div>
+                    <div class="leaderboard-info">
+                        <span class="leaderboard-name">Priya Patel</span>
+                        <span class="leaderboard-streak"><span class="flame">🔥</span> 4連勝中</span>
+                    </div>
+                    <span class="leaderboard-score">81%</span>
+                </li>
+            </ul>
+        </section>
+        <!-- ...（motoneta.tsxの内容を全て展開）... -->
+    </div>
+    <script>
+        // ...既存のJS...（motoneta.tsxの内容をそのまま）...
+    </script>
+</body>
+</html>
