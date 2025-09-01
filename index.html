@@ -10,6 +10,19 @@
 <body>
     <!-- Background particles -->
     <div id="particles"></div>
+    
+    <!-- Ranking Update Notification -->
+    <div class="ranking-notification" id="rankingNotification">
+        <i data-feather="trending-up"></i>
+        <span>Ranking Update!</span>
+    </div>
+    
+    <!-- Controls Guide -->
+    <div class="controls-guide">
+        <div>Controls: [Space] Trigger | [R] Reset | [P] Pause | [1-5] Speed</div>
+        <div id="speedIndicator">Speed: Normal (3)</div>
+    </div>
+    
     <!-- Header -->
     <header class="header">
         <div class="header-content">
@@ -48,7 +61,7 @@
                     </div>
                     <span class="leaderboard-score">99%</span>
                 </li>
-                <li class="leaderboard-item second">
+                <li class="leaderboard-item second" id="maria-item">
                     <img src="images/maria.png" alt="face" class="face-photo">
                     <div class="rank-icon">🥈</div>
                     <div class="leaderboard-info">
@@ -57,23 +70,23 @@
                     </div>
                     <span class="leaderboard-score">92%</span>
                 </li>
-                <li class="leaderboard-item third">
-                    <img src="images/john.png" alt="face" class="face-photo">
-                    <div class="rank-icon">🥉</div>
-                    <div class="leaderboard-info">
-                        <span class="leaderboard-name">John</span>
-                        <span class="leaderboard-streak"><span class="flame">🔥</span> 15 win streak</span>
-                    </div>
-                    <span class="leaderboard-score">89%</span>
-                </li>
-                <li class="leaderboard-item you">
+                <li class="leaderboard-item third" id="tada-item">
                     <img src="images/tada.png" alt="face" class="face-photo">
-                    <div class="rank-icon">4</div>
+                    <div class="rank-icon">🥉</div>
                     <div class="leaderboard-info">
                         <span class="leaderboard-name">Tada (YOU)</span>
                         <span class="leaderboard-streak"><span class="flame">🔥</span> 7 win streak</span>
                     </div>
-                    <span class="leaderboard-score">85%</span>
+                    <span class="leaderboard-score" id="tada-score">84%</span>
+                </li>
+                <li class="leaderboard-item" id="john-item">
+                    <img src="images/john.png" alt="face" class="face-photo">
+                    <div class="rank-icon">4</div>
+                    <div class="leaderboard-info">
+                        <span class="leaderboard-name">John</span>
+                        <span class="leaderboard-streak"><span class="flame">🔥</span> 15 win streak</span>
+                    </div>
+                    <span class="leaderboard-score">83%</span>
                 </li>
                 <li class="leaderboard-item">
                     <img src="images/alex.png" alt="face" class="face-photo">

@@ -237,3 +237,97 @@ body {
     position: relative;
     overflow-x: hidden;
 }
+
+/* Ranking Animation Styles */
+.ranking-notification {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    background: #38bdf8;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 8px;
+    display: none;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
+    z-index: 1000;
+    animation: slideInRight 0.3s ease-out;
+}
+
+.ranking-notification.show {
+    display: flex;
+}
+
+.controls-guide {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(17, 24, 39, 0.9);
+    color: #94a3b8;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    line-height: 1.4;
+    font-family: 'Courier New', monospace;
+    z-index: 1000;
+}
+
+.leaderboard-item {
+    transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.leaderboard-item.highlight {
+    background: #1e40af !important;
+    border-color: #3b82f6 !important;
+    box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+}
+
+.leaderboard-item.moving {
+    transform: translateY(0);
+}
+
+.score-animation {
+    display: inline-block;
+    transition: all 0.8s ease-out;
+}
+
+.score-animation.updating {
+    transform: scale(1.1);
+    color: #4ade80 !important;
+}
+
+/* Animation Keyframes */
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutRight {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+.paused * {
+    animation-play-state: paused !important;
+    transition-duration: 0s !important;
+}
