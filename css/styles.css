@@ -329,6 +329,7 @@ body {
     box-shadow: 0 4px 20px rgba(56, 189, 248, 0.2);
     z-index: 1000;
     min-width: 300px;
+    display: none;
 }
 
 .timer-content {
