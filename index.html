@@ -203,10 +203,15 @@
             font-size: 1.1rem;
             margin-right: 0.2rem;
         }
-        .friends-ranking .leaderboard-score {
-            font-weight: bold;
-            font-size: 1.3rem;
-            color: #4ade80;
+        .friends-ranking .leaderboard-item.first {
+            background: #292524;
+            border-color: #fbbf24;
+        }
+        .friends-ranking .leaderboard-item.first .leaderboard-name {
+            color: #fbbf24;
+        }
+        .friends-ranking .leaderboard-item.first .leaderboard-score {
+            color: #fbbf24;
         }
         @media (max-width: 600px) {
             .leaderboard-section {
@@ -314,18 +319,18 @@
                 </li>
             </ul>
         </section>
-        <!-- Friends Ranking Section -->
+        <!-- TOP Ranking Section -->
         <section class="friends-ranking" id="friendsView">
             <div class="leaderboard-title">
                 <i data-feather="award" style="color: #fbbf24; margin-right: 8px;"></i>
-                <span>Leaderboard</span>
+                <span>TOP Ranking</span>
             </div>
             <ul class="leaderboard-list">
                 <li class="leaderboard-item first">
                     <img src="emily.png" alt="face" class="face-photo">
                     <div class="rank-icon">🥇</div>
                     <div class="leaderboard-info">
-                        <span class="leaderboard-name" style="color: #fbbf24;">Emily</span>
+                        <span class="leaderboard-name">Emily</span>
                         <span class="leaderboard-streak"><span class="flame">🔥</span> 20 win streak</span>
                     </div>
                     <span class="leaderboard-score">99%</span>
