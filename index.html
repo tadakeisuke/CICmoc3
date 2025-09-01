@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Emoterrain - Experience Detail</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.js"></script>
-    <style>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
         /* Leaderboard Section Styles */
         .leaderboard-section {
             max-width: 400px;
@@ -273,16 +275,16 @@
             </div>
             <ul class="leaderboard-list">
                 <li class="leaderboard-item first">
-                    <img src="emily.png" alt="face" class="face-photo">
+                    <img src="images/emily.png" alt="face" class="face-photo">
                     <div class="rank-icon">🥇</div>
                     <div class="leaderboard-info">
-                        <span class="leaderboard-name" style="color: #fbbf24;">Emily</span>
+                        <span class="leaderboard-name">Emily</span>
                         <span class="leaderboard-streak"><span class="flame">🔥</span> 20 win streak</span>
                     </div>
                     <span class="leaderboard-score">99%</span>
                 </li>
                 <li class="leaderboard-item second">
-                    <img src="maria.png" alt="face" class="face-photo">
+                    <img src="images/maria.png" alt="face" class="face-photo">
                     <div class="rank-icon">🥈</div>
                     <div class="leaderboard-info">
                         <span class="leaderboard-name">Maria</span>
@@ -291,7 +293,7 @@
                     <span class="leaderboard-score">92%</span>
                 </li>
                 <li class="leaderboard-item third">
-                    <img src="john.png" alt="face" class="face-photo">
+                    <img src="images/john.png" alt="face" class="face-photo">
                     <div class="rank-icon">🥉</div>
                     <div class="leaderboard-info">
                         <span class="leaderboard-name">John</span>
@@ -300,7 +302,7 @@
                     <span class="leaderboard-score">89%</span>
                 </li>
                 <li class="leaderboard-item you">
-                    <img src="tada.png" alt="face" class="face-photo">
+                    <img src="images/tada.png" alt="face" class="face-photo">
                     <div class="rank-icon">4</div>
                     <div class="leaderboard-info">
                         <span class="leaderboard-name">Tada (YOU)</span>
@@ -309,7 +311,7 @@
                     <span class="leaderboard-score">85%</span>
                 </li>
                 <li class="leaderboard-item">
-                    <img src="alex.png" alt="face" class="face-photo">
+                    <img src="images/alex.png" alt="face" class="face-photo">
                     <div class="rank-icon">5</div>
                     <div class="leaderboard-info">
                         <span class="leaderboard-name">Alex</span>
@@ -327,7 +329,7 @@
             </div>
             <ul class="leaderboard-list">
                 <li class="leaderboard-item first">
-                    <img src="emily.png" alt="face" class="face-photo">
+                    <img src="images/emily.png" alt="face" class="face-photo">
                     <div class="rank-icon">🥇</div>
                     <div class="leaderboard-info">
                         <span class="leaderboard-name">Emily</span>
@@ -337,48 +339,8 @@
                 </li>
             </ul>
         </section>
-                <li class="leaderboard-item">
-                    <img src="john.png" alt="face" class="face-photo">
-                    <div class="rank-icon">4</div>
-                    <div class="leaderboard-info">
-                        <span class="leaderboard-name" style="color: #22d3ee;">John Smith</span>
-                        <span class="leaderboard-streak"><span class="flame">🔥</span> 15 win streak</span>
-                    </div>
-                    <span class="leaderboard-score">89%</span>
-                </li>
-                <li class="leaderboard-item">
-                    <img src="emily.png" alt="face" class="face-photo">
-                    <div class="rank-icon">5</div>
-                    <div class="leaderboard-info">
-                        <span class="leaderboard-name" style="color: #22d3ee;">emily Davis</span>
-                        <span class="leaderboard-streak"><span class="flame">🔥</span> 4 win streak</span>
-                    </div>
-                    <span class="leaderboard-score">81%</span>
-                </li>
-            </ul>
-        </section>
         <!-- ...existing code... -->
     </div>
-    <script>
-        // ...existing code... 
-        // Switch view functionality
-        const switchBtn = document.getElementById('switchBtn');
-        const leaderboardView = document.getElementById('leaderboardView');
-        const friendsView = document.getElementById('friendsView');
-        let isFriendsView = false;
-
-        switchBtn.addEventListener('click', () => {
-            if (isFriendsView) {
-                leaderboardView.style.display = 'block';
-                friendsView.style.display = 'none';
-                switchBtn.textContent = 'Switch to TOP Ranking';
-            } else {
-                leaderboardView.style.display = 'none';
-                friendsView.style.display = 'block';
-                switchBtn.textContent = 'Switch to Global Ranking';
-            }
-            isFriendsView = !isFriendsView;
-        });
-    </script>
+    <script src="js/app.js"></script>
 </body>
 </html>

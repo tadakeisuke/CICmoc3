@@ -1,0 +1,235 @@
+/* Leaderboard Section Styles */
+.leaderboard-section {
+    max-width: 400px;
+    margin: 2rem auto 2.5rem auto;
+    background: #111827;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(34,211,238,0.08);
+    padding: 1.5rem 1rem 1.5rem 1rem;
+}
+.leaderboard-title {
+    display: flex;
+    align-items: center;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #38bdf8;
+    margin-bottom: 1.2rem;
+    letter-spacing: 0.08em;
+}
+.leaderboard-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.leaderboard-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #1e293b;
+    border-radius: 10px;
+    margin-bottom: 0.7rem;
+    padding: 1rem 1.2rem;
+    font-size: 1.1rem;
+    box-shadow: 0 2px 8px rgba(34,211,238,0.04);
+    border: 2px solid transparent;
+    transition: box-shadow 0.2s, border-color 0.2s;
+}
+.leaderboard-item.first {
+    background: #292524;
+    border-color: #fbbf24;
+}
+.leaderboard-item.second {
+    background: #1e293b;
+    border-color: #38bdf8;
+}
+.leaderboard-item.third {
+    background: #1e293b;
+    border-color: #22d3ee;
+}
+.leaderboard-item.you {
+    background: #0f172a;
+    border-color: #64748b;
+}
+.leaderboard-item .rank-icon {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-right: 1.1rem;
+    width: 2.2rem;
+    text-align: center;
+}
+.face-photo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 1rem;
+}
+.leaderboard-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.leaderboard-name {
+    font-weight: bold;
+    color: #fbbf24;
+    font-size: 1.1rem;
+}
+.leaderboard-item.second .leaderboard-name {
+    color: #38bdf8;
+}
+.leaderboard-item.third .leaderboard-name {
+    color: #22d3ee;
+}
+.leaderboard-item.you .leaderboard-name {
+    color: #60a5fa;
+}
+.leaderboard-item:not(.first):not(.second):not(.third):not(.you) .leaderboard-name {
+    color: #22d3ee;
+}
+.leaderboard-streak {
+    font-size: 0.95rem;
+    color: #f87171;
+    margin-top: 0.2rem;
+    display: flex;
+    align-items: center;
+}
+.flame {
+    font-size: 1.1rem;
+    margin-right: 0.2rem;
+}
+.leaderboard-score {
+    font-weight: bold;
+    font-size: 1.3rem;
+    color: #4ade80;
+}
+.leaderboard-item.first .leaderboard-score {
+    color: #fbbf24;
+}
+.leaderboard-item.second .leaderboard-score {
+    color: #38bdf8;
+}
+.leaderboard-item.third .leaderboard-score {
+    color: #22d3ee;
+}
+.leaderboard-item.you .leaderboard-score {
+    color: #60a5fa;
+}
+.switch-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #38bdf8;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+.friends-ranking {
+    display: none;
+    max-width: 400px;
+    margin: 2rem auto;
+    background: #111827;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(34,211,238,0.08);
+    padding: 1.5rem 1rem 1.5rem 1rem;
+}
+.friends-ranking .leaderboard-title {
+    display: flex;
+    align-items: center;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #38bdf8;
+    margin-bottom: 1.2rem;
+    letter-spacing: 0.08em;
+}
+.friends-ranking .leaderboard-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.friends-ranking .leaderboard-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #1e293b;
+    border-radius: 10px;
+    margin-bottom: 0.7rem;
+    padding: 1rem 1.2rem;
+    font-size: 1.1rem;
+    box-shadow: 0 2px 8px rgba(34,211,238,0.04);
+    border: 2px solid transparent;
+    transition: box-shadow 0.2s, border-color 0.2s;
+}
+.friends-ranking .face-photo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 1rem;
+}
+.friends-ranking .rank-icon {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-right: 1.1rem;
+    width: 2.2rem;
+    text-align: center;
+}
+.friends-ranking .leaderboard-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.friends-ranking .leaderboard-name {
+    font-weight: bold;
+    color: #fbbf24;
+    font-size: 1.1rem;
+}
+.friends-ranking .leaderboard-streak {
+    font-size: 0.95rem;
+    color: #f87171;
+    margin-top: 0.2rem;
+    display: flex;
+    align-items: center;
+}
+.friends-ranking .flame {
+    font-size: 1.1rem;
+    margin-right: 0.2rem;
+}
+.friends-ranking .leaderboard-score {
+    font-weight: bold;
+    font-size: 1.3rem;
+    color: #4ade80;
+}
+.friends-ranking .leaderboard-item.first {
+    background: #292524;
+    border-color: #fbbf24;
+}
+.friends-ranking .leaderboard-item.first .leaderboard-name {
+    color: #fbbf24;
+}
+.friends-ranking .leaderboard-item.first .leaderboard-score {
+    color: #fbbf24;
+}
+@media (max-width: 600px) {
+    .leaderboard-section {
+        max-width: 98vw;
+        padding: 1rem 0.2rem;
+    }
+    .leaderboard-item {
+        padding: 0.7rem 0.5rem;
+        font-size: 1rem;
+    }
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Courier New', monospace;
+    background: linear-gradient(135deg, #1f2937 0%, #000000 50%, #1f2937 100%);
+    color: white;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
