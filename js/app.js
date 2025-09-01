@@ -37,51 +37,89 @@ class RankingAnimator {
     constructor() {
         this.isAnimating = false;
         this.isPaused = false;
-        this.animationSpeed = 3; // Default speed (1-5 scale)
-        this.speedMultiplier = 1; // CSS animation multiplier
+        this.animationSpeed = 3;
+        this.speedMultiplier = 1;
         this.autoTriggerTimeout = null;
         this.hasTriggered = false;
-        
-        // Animation stages with score targets and timing
-        this.animationStages = [
-            { time: 4000, tadaScore: 76, targetRank: 4, message: "Stage 1: Rising to 4th place" },
-            { time: 10000, tadaScore: 80, targetRank: 3, message: "Stage 2: Climbing to 3rd place" },
-            { time: 15000, tadaScore: 91, targetRank: 2, message: "Stage 3: Breaking into 2nd place" }
-        ];
-        
         this.currentStage = 0;
-        this.stageStartTime = 0;
         
-        // Initial scores for all users
-        this.initialScores = {
-            emily: 99,
-            maria: 92,
-            john: 83,
-            alex: 81,
-            tada: 64
-        };
-        
-        // Current scores (will be modified during animation)
-        this.currentScores = { ...this.initialScores };
+        // 明確な状態遷移定義
+        this.rankingStates = [
+            {
+                // 初期状態
+                time: 0,
+                message: "Initial State",
+                rankings: [
+                    { name: "Emily", score: 99, rank: 1 },
+                    { name: "Maria", score: 81, rank: 2 },
+                    { name: "John", score: 77, rank: 3 },
+                    { name: "Alex", score: 70, rank: 4 },
+                    { name: "Tada", score: 64, rank: 5 }
+                ]
+            },
+            {
+                // 4秒経過
+                time: 4000,
+                message: "Stage 1: Tada overtakes Alex (4th place)",
+                rankings: [
+                    { name: "Emily", score: 99, rank: 1 },
+                    { name: "Maria", score: 81, rank: 2 },
+                    { name: "John", score: 77, rank: 3 },
+                    { name: "Tada", score: 76, rank: 4 },
+                    { name: "Alex", score: 70, rank: 5 }
+                ]
+            },
+            {
+                // 10秒経過
+                time: 10000,
+                message: "Stage 2: Tada overtakes John (3rd place)",
+                rankings: [
+                    { name: "Emily", score: 99, rank: 1 },
+                    { name: "Maria", score: 81, rank: 2 },
+                    { name: "Tada", score: 80, rank: 3 },
+                    { name: "John", score: 77, rank: 4 },
+                    { name: "Alex", score: 70, rank: 5 }
+                ]
+            },
+            {
+                // 15秒経過
+                time: 15000,
+                message: "Stage 3: Tada overtakes Maria (2nd place)",
+                rankings: [
+                    { name: "Emily", score: 99, rank: 1 },
+                    { name: "Tada", score: 91, rank: 2 },
+                    { name: "Maria", score: 81, rank: 3 },
+                    { name: "John", score: 75, rank: 4 },
+                    { name: "Alex", score: 70, rank: 5 }
+                ]
+            }
+        ];
         
         this.initializeElements();
         this.setupEventListeners();
         this.startAutoTrigger();
     }
-    
+
     initializeElements() {
-        this.tadaItem = document.getElementById('tada-item');
-        this.mariaItem = document.getElementById('maria-item');
-        this.johnItem = document.getElementById('john-item');
-        this.alexItem = document.getElementById('alex-item');
-        this.emilyItem = document.querySelector('.first');
+        // User items
+        this.userItems = {
+            Emily: document.querySelector('.first'),
+            Maria: document.getElementById('maria-item'),
+            John: document.getElementById('john-item'),
+            Alex: document.getElementById('alex-item'),
+            Tada: document.getElementById('tada-item')
+        };
         
-        this.tadaScore = document.getElementById('tada-score');
-        this.mariaScore = this.mariaItem.querySelector('.leaderboard-score');
-        this.johnScore = this.johnItem.querySelector('.leaderboard-score');
-        this.alexScore = this.alexItem.querySelector('.leaderboard-score');
-        this.emilyScore = this.emilyItem.querySelector('.leaderboard-score');
+        // Score elements
+        this.scoreElements = {
+            Emily: this.userItems.Emily.querySelector('.leaderboard-score'),
+            Maria: this.userItems.Maria.querySelector('.leaderboard-score'),
+            John: this.userItems.John.querySelector('.leaderboard-score'),
+            Alex: this.userItems.Alex.querySelector('.leaderboard-score'),
+            Tada: this.userItems.Tada.querySelector('.leaderboard-score')
+        };
         
+        // UI elements
         this.notification = document.getElementById('rankingNotification');
         this.speedIndicator = document.getElementById('speedIndicator');
         this.leaderboardList = document.querySelector('.leaderboard-list');
@@ -90,7 +128,7 @@ class RankingAnimator {
         this.timerText = document.querySelector('.timer-text');
         this.timerCountdown = document.getElementById('timerCountdown');
     }
-    
+
     setupEventListeners() {
         // Keyboard controls
         document.addEventListener('keydown', (e) => {
@@ -141,7 +179,7 @@ class RankingAnimator {
             });
         }
     }
-    
+
     startAutoTrigger() {
         if (this.autoTriggerTimeout) {
             clearTimeout(this.autoTriggerTimeout);
@@ -151,131 +189,175 @@ class RankingAnimator {
             if (!this.hasTriggered) {
                 this.triggerRankingChange();
             }
-        }, 2000); // 2 seconds delay
+        }, 2000);
     }
-    
+
     showNotification() {
         this.notification.classList.add('show');
         setTimeout(() => {
             this.notification.classList.remove('show');
         }, 2000);
     }
-    
+
     async triggerRankingChange() {
         if (this.isAnimating) return;
         
         this.isAnimating = true;
         this.hasTriggered = true;
         this.currentStage = 0;
-        this.stageStartTime = Date.now();
         
-        // Show progress timer
+        // Show progress timer and notification
         this.showProgressTimer();
-        
-        // Show notification
         this.showNotification();
         
-        // Start the progressive animation
-        await this.runProgressiveAnimation();
+        // Execute all stages sequentially
+        for (let stage = 1; stage < this.rankingStates.length; stage++) {
+            const currentState = this.rankingStates[stage];
+            const previousState = this.rankingStates[stage - 1];
+            
+            // Wait for the time interval
+            const waitTime = currentState.time - previousState.time;
+            await this.delay(waitTime);
+            
+            // Update progress
+            const progress = (stage / (this.rankingStates.length - 1)) * 100;
+            this.updateProgressTimer(currentState.message, progress);
+            
+            // Execute the transition to this state
+            await this.transitionToState(currentState, stage);
+        }
         
-        // Hide progress timer
+        // Complete animation
+        this.updateProgressTimer('Animation Complete!', 100);
+        await this.delay(1000);
         this.hideProgressTimer();
         
         this.isAnimating = false;
     }
     
-    async runProgressiveAnimation() {
-        for (let stage = 0; stage < this.animationStages.length; stage++) {
-            this.currentStage = stage;
-            const stageData = this.animationStages[stage];
-            
-            // Update progress timer message
-            this.updateProgressTimer(stageData.message, (stage / this.animationStages.length) * 100);
-            
-            // Wait for the stage timing
-            if (stage > 0) {
-                const waitTime = this.animationStages[stage].time - this.animationStages[stage - 1].time;
-                await this.delay(waitTime);
-            } else {
-                await this.delay(stageData.time);
-            }
-            
-            // Execute stage animation
-            await this.executeStage(stageData);
-        }
+    async transitionToState(targetState, stageIndex) {
+        // Animate score changes
+        const animationPromises = [];
         
-        // Complete final stage
-        this.updateProgressTimer('Animation Complete!', 100);
-        await this.delay(500);
-    }
-    
-    async executeStage(stageData) {
-        // Animate score change for Tada
-        await this.animateScoreChange(this.currentScores.tada, stageData.tadaScore);
-        this.currentScores.tada = stageData.tadaScore;
-        
-        // Adjust other users' scores to maintain ranking consistency
-        this.adjustOtherScores(stageData.tadaScore, stageData.targetRank);
-        
-        // Animate position changes if needed
-        await this.animatePositionChanges(stageData.targetRank);
-        
-        // Add highlight effect
-        this.tadaItem.classList.add('highlight');
-        await this.delay(800);
-        this.tadaItem.classList.remove('highlight');
-    }
-    
-    adjustOtherScores(tadaScore, tadaRank) {
-        // Ensure ranking consistency by adjusting other users' scores
-        const allUsers = [
-            { name: 'emily', score: this.currentScores.emily, element: this.emilyScore, rank: 1 },
-            { name: 'maria', score: this.currentScores.maria, element: this.mariaScore, rank: 2 },
-            { name: 'john', score: this.currentScores.john, element: this.johnScore, rank: 3 },
-            { name: 'alex', score: this.currentScores.alex, element: this.alexScore, rank: 4 },
-            { name: 'tada', score: tadaScore, element: this.tadaScore, rank: tadaRank }
-        ];
-        
-        // Sort by target rank
-        allUsers.sort((a, b) => a.rank - b.rank);
-        
-        // Adjust scores to ensure consistency
-        for (let i = 0; i < allUsers.length; i++) {
-            const user = allUsers[i];
-            const nextUser = allUsers[i + 1];
-            
-            if (nextUser && user.score <= nextUser.score) {
-                // Current user's score should be higher than next user
-                if (user.name === 'tada') {
-                    // If Tada is the one climbing, keep his score and adjust others down
-                    if (nextUser.name !== 'tada') {
-                        const newScore = Math.max(user.score - (2 + Math.floor(Math.random() * 3)), 50);
-                        this.currentScores[nextUser.name] = newScore;
-                        this.animateScoreUpdate(nextUser.element, nextUser.score, newScore);
-                    }
-                } else if (nextUser.name === 'tada') {
-                    // If Tada is overtaking this user, adjust this user's score down slightly
-                    const newScore = Math.max(tadaScore - (1 + Math.floor(Math.random() * 2)), 50);
-                    this.currentScores[user.name] = newScore;
-                    this.animateScoreUpdate(user.element, user.score, newScore);
+        targetState.rankings.forEach(user => {
+            const scoreElement = this.scoreElements[user.name];
+            if (scoreElement) {
+                const currentScore = parseInt(scoreElement.textContent);
+                if (currentScore !== user.score) {
+                    animationPromises.push(
+                        this.animateScoreChange(scoreElement, currentScore, user.score, user.name === 'Tada')
+                    );
                 }
             }
+        });
+        
+        // Wait for score animations to complete
+        await Promise.all(animationPromises);
+        
+        // Reorder DOM elements based on new rankings
+        await this.reorderElements(targetState.rankings);
+        
+        // Update visual styling
+        this.updateRankStyling(targetState.rankings);
+        
+        // Highlight Tada's movement
+        if (stageIndex > 0) {
+            this.userItems.Tada.classList.add('highlight');
+            await this.delay(800);
+            this.userItems.Tada.classList.remove('highlight');
         }
     }
-    
-    async animateScoreUpdate(scoreElement, fromScore, toScore) {
-        if (fromScore === toScore) return;
-        
-        const duration = 1000;
-        const steps = 20;
+
+    async animateScoreChange(scoreElement, fromScore, toScore, isTada = false) {
+        const duration = 1500 / this.speedMultiplier;
+        const steps = 30;
         const increment = (toScore - fromScore) / steps;
+        
+        if (isTada) {
+            scoreElement.classList.add('updating');
+        }
         
         for (let i = 0; i <= steps; i++) {
             const currentScore = Math.round(fromScore + (increment * i));
             scoreElement.textContent = currentScore + '%';
             await this.delay(duration / steps);
         }
-    }    showProgressTimer() {
+        
+        if (isTada) {
+            setTimeout(() => {
+                scoreElement.classList.remove('updating');
+            }, 200);
+        }
+    }
+
+    async reorderElements(rankings) {
+        // Clear the leaderboard list
+        const parent = this.leaderboardList;
+        
+        // Sort rankings by rank
+        const sortedRankings = [...rankings].sort((a, b) => a.rank - b.rank);
+        
+        // Reorder DOM elements
+        sortedRankings.forEach(user => {
+            const userItem = this.userItems[user.name];
+            if (userItem) {
+                parent.appendChild(userItem);
+            }
+        });
+        
+        await this.delay(300);
+    }
+
+    updateRankStyling(rankings) {
+        rankings.forEach(user => {
+            const userItem = this.userItems[user.name];
+            if (!userItem) return;
+            
+            const rankIcon = userItem.querySelector('.rank-icon');
+            const userName = userItem.querySelector('.leaderboard-name');
+            const userScore = userItem.querySelector('.leaderboard-score');
+            
+            // Clear existing classes
+            userItem.className = 'leaderboard-item';
+            if (user.name === 'Tada') {
+                userItem.classList.add('you');
+            }
+            
+            // Set rank-specific styling
+            switch(user.rank) {
+                case 1:
+                    userItem.classList.add('first');
+                    rankIcon.textContent = '🥇';
+                    userName.style.color = '#fbbf24';
+                    userScore.style.color = '#fbbf24';
+                    break;
+                case 2:
+                    userItem.classList.add('second');
+                    rankIcon.textContent = '🥈';
+                    userName.style.color = '#38bdf8';
+                    userScore.style.color = '#38bdf8';
+                    break;
+                case 3:
+                    userItem.classList.add('third');
+                    rankIcon.textContent = '🥉';
+                    userName.style.color = '#22d3ee';
+                    userScore.style.color = '#22d3ee';
+                    break;
+                default:
+                    rankIcon.textContent = user.rank.toString();
+                    if (user.name === 'Tada') {
+                        userName.style.color = '#60a5fa';
+                        userScore.style.color = '#60a5fa';
+                    } else {
+                        userName.style.color = '#22d3ee';
+                        userScore.style.color = '#4ade80';
+                    }
+                    break;
+            }
+        });
+    }
+
+    showProgressTimer() {
         if (!this.progressTimer) return;
         
         this.progressTimer.style.display = 'block';
@@ -286,17 +368,11 @@ class RankingAnimator {
         if (this.timerText) this.timerText.textContent = text;
         if (this.progressFill) this.progressFill.style.width = `${progress}%`;
         if (this.timerCountdown) {
-            const totalTime = this.animationStages[this.animationStages.length - 1].time;
+            const totalTime = this.rankingStates[this.rankingStates.length - 1].time;
             const elapsed = (progress / 100) * totalTime;
             const remaining = Math.max(0, Math.ceil((totalTime - elapsed) / 1000));
             this.timerCountdown.textContent = `${remaining}s`;
         }
-    }
-    
-    getStageText(progress) {
-        if (progress < 33) return 'Climbing to 4th place...';
-        if (progress < 66) return 'Rising to 3rd place...';
-        return 'Breaking into 2nd place...';
     }
     
     hideProgressTimer() {
@@ -306,216 +382,47 @@ class RankingAnimator {
             }
         }, 1000);
     }
-    
-    async animateScoreChange(fromScore, toScore) {
-        const scoreElement = this.tadaScore;
-        const duration = 1500 / this.speedMultiplier;
-        const steps = 30;
-        const increment = (toScore - fromScore) / steps;
-        
-        scoreElement.classList.add('updating');
-        
-        for (let i = 0; i <= steps; i++) {
-            const currentScore = Math.round(fromScore + (increment * i));
-            scoreElement.textContent = currentScore + '%';
-            await this.delay(duration / steps);
-        }
-        
-        setTimeout(() => {
-            scoreElement.classList.remove('updating');
-        }, 200);
-    }
-    
-    async animatePositionChanges(targetRank) {
-        const items = [
-            { element: this.emilyItem, currentRank: 1 },
-            { element: this.mariaItem, currentRank: 2 },
-            { element: this.johnItem, currentRank: 3 },
-            { element: this.alexItem, currentRank: 4 },
-            { element: this.tadaItem, currentRank: 5 }
-        ];
-        
-        // Find Tada's current position
-        let tadaCurrentPos = 4; // 5th position (0-indexed)
-        
-        if (targetRank === 4) tadaCurrentPos = 3; // Move to 4th
-        else if (targetRank === 3) tadaCurrentPos = 2; // Move to 3rd
-        else if (targetRank === 2) tadaCurrentPos = 1; // Move to 2nd
-        
-        // Perform DOM reordering
-        const parent = this.tadaItem.parentNode;
-        const children = Array.from(parent.children);
-        
-        // Remove Tada from current position
-        parent.removeChild(this.tadaItem);
-        
-        // Insert Tada at new position
-        if (targetRank === 2) {
-            parent.insertBefore(this.tadaItem, this.mariaItem);
-        } else if (targetRank === 3) {
-            parent.insertBefore(this.tadaItem, this.johnItem);
-        } else if (targetRank === 4) {
-            parent.insertBefore(this.tadaItem, this.alexItem);
-        }
-        
-        // Update rank icons and styling
-        this.updateRankDisplay(targetRank);
-        
-        await this.delay(500);
-    }
-    
-    updateRankDisplay(tadaRank) {
-        // Update Tada's rank
-        const tadaRankIcon = this.tadaItem.querySelector('.rank-icon');
-        const tadaName = this.tadaItem.querySelector('.leaderboard-name');
-        const tadaScoreEl = this.tadaItem.querySelector('.leaderboard-score');
-        
-        this.tadaItem.className = 'leaderboard-item you';
-        
-        if (tadaRank === 2) {
-            this.tadaItem.classList.add('second');
-            tadaRankIcon.textContent = '🥈';
-            tadaName.style.color = '#38bdf8';
-            tadaScoreEl.style.color = '#38bdf8';
-        } else if (tadaRank === 3) {
-            this.tadaItem.classList.add('third');
-            tadaRankIcon.textContent = '🥉';
-            tadaName.style.color = '#22d3ee';
-            tadaScoreEl.style.color = '#22d3ee';
-        } else if (tadaRank === 4) {
-            tadaRankIcon.textContent = '4';
-            tadaName.style.color = '#22d3ee';
-            tadaScoreEl.style.color = '#22d3ee';
-        }
-        
-        // Update other users' ranks accordingly
-        this.updateOtherRanks(tadaRank);
-    }
-    
-    updateOtherRanks(tadaRank) {
-        // Reset all rank classes and update accordingly
-        const items = [this.emilyItem, this.mariaItem, this.johnItem, this.alexItem];
-        const ranks = [1, 2, 3, 4, 5];
-        
-        // Remove Tada's rank from available ranks
-        ranks.splice(tadaRank - 1, 1);
-        
-        items.forEach((item, index) => {
-            const rankIcon = item.querySelector('.rank-icon');
-            const name = item.querySelector('.leaderboard-name');
-            const score = item.querySelector('.leaderboard-score');
-            const newRank = ranks[index];
-            
-            // Clear existing rank classes
-            item.classList.remove('second', 'third');
-            
-            if (newRank === 1) {
-                item.classList.add('first');
-                rankIcon.textContent = '🥇';
-                name.style.color = '#fbbf24';
-                score.style.color = '#fbbf24';
-            } else if (newRank === 2) {
-                item.classList.add('second');
-                rankIcon.textContent = '🥈';
-                name.style.color = '#38bdf8';
-                score.style.color = '#38bdf8';
-            } else if (newRank === 3) {
-                item.classList.add('third');
-                rankIcon.textContent = '🥉';
-                name.style.color = '#22d3ee';
-                score.style.color = '#22d3ee';
-            } else {
-                rankIcon.textContent = newRank.toString();
-                name.style.color = '#22d3ee';
-                score.style.color = '#22d3ee';
-            }
-        });
-    }
-    
+
     resetRanking() {
         if (this.isAnimating) return;
         
-        // Reset all scores to initial values
-        this.currentScores = { ...this.initialScores };
+        // Reset to initial state
+        const initialState = this.rankingStates[0];
         
-        // Clear any ongoing animations
-        this.tadaItem.style.transform = '';
-        this.mariaItem.style.transform = '';
-        this.johnItem.style.transform = '';
-        this.alexItem.style.transform = '';
+        // Reset scores
+        initialState.rankings.forEach(user => {
+            const scoreElement = this.scoreElements[user.name];
+            if (scoreElement) {
+                scoreElement.textContent = user.score + '%';
+                scoreElement.classList.remove('updating');
+            }
+        });
         
         // Clear animation classes
-        [this.tadaItem, this.mariaItem, this.johnItem, this.alexItem].forEach(item => {
-            item.classList.remove('highlight', 'moving', 'second', 'third');
+        Object.values(this.userItems).forEach(item => {
+            if (item) {
+                item.classList.remove('highlight', 'moving');
+                item.style.transform = '';
+            }
         });
         
-        // Reset scores in DOM
-        this.tadaScore.textContent = '64%';
-        this.mariaScore.textContent = '92%';
-        this.johnScore.textContent = '83%';
-        this.alexScore.textContent = '81%';
-        this.emilyScore.textContent = '99%';
+        // Reorder elements to initial state
+        this.reorderElements(initialState.rankings);
         
-        // Reset score classes
-        [this.tadaScore, this.mariaScore, this.johnScore, this.alexScore, this.emilyScore].forEach(score => {
-            score.classList.remove('updating');
-        });
-        
-        // Restore original DOM order: Emily, Maria, John, Alex, Tada
-        const parent = this.tadaItem.parentNode;
-        parent.innerHTML = ''; // Clear all items
-        
-        // Re-append in correct order
-        parent.appendChild(this.emilyItem);
-        parent.appendChild(this.mariaItem);
-        parent.appendChild(this.johnItem);
-        parent.appendChild(this.alexItem);
-        parent.appendChild(this.tadaItem);
-        
-        // Reset rank icons and colors
-        this.resetRankStyles();
+        // Update styling to initial state
+        this.updateRankStyling(initialState.rankings);
         
         // Reset animation state
         this.currentStage = 0;
         this.hasTriggered = false;
         this.startAutoTrigger();
     }
-    
-    resetRankStyles() {
-        // Emily (1st)
-        this.emilyItem.className = 'leaderboard-item first';
-        this.emilyItem.querySelector('.rank-icon').textContent = '🥇';
-        this.emilyItem.querySelector('.leaderboard-name').style.color = '#fbbf24';
-        this.emilyItem.querySelector('.leaderboard-score').style.color = '#fbbf24';
-        
-        // Maria (2nd)
-        this.mariaItem.className = 'leaderboard-item second';
-        this.mariaItem.querySelector('.rank-icon').textContent = '🥈';
-        this.mariaItem.querySelector('.leaderboard-name').style.color = '#38bdf8';
-        this.mariaItem.querySelector('.leaderboard-score').style.color = '#38bdf8';
-        
-        // John (3rd)
-        this.johnItem.className = 'leaderboard-item';
-        this.johnItem.querySelector('.rank-icon').textContent = '3';
-        this.johnItem.querySelector('.leaderboard-name').style.color = '#22d3ee';
-        this.johnItem.querySelector('.leaderboard-score').style.color = '#4ade80';
-        
-        // Alex (4th)
-        this.alexItem.className = 'leaderboard-item';
-        this.alexItem.querySelector('.rank-icon').textContent = '4';
-        this.alexItem.querySelector('.leaderboard-name').style.color = '#22d3ee';
-        this.alexItem.querySelector('.leaderboard-score').style.color = '#4ade80';
-        
-        // Tada (5th - YOU)
-        this.tadaItem.className = 'leaderboard-item you';
-        this.tadaItem.querySelector('.rank-icon').textContent = '5';
-        this.tadaItem.querySelector('.leaderboard-name').style.color = '#60a5fa';
-        this.tadaItem.querySelector('.leaderboard-score').style.color = '#60a5fa';
-    }    togglePause() {
+
+    togglePause() {
         this.isPaused = !this.isPaused;
         document.body.classList.toggle('paused', this.isPaused);
     }
-    
+
     setSpeed(speed) {
         this.animationSpeed = speed;
         this.speedMultiplier = this.getSpeedMultiplier(speed);
@@ -524,17 +431,17 @@ class RankingAnimator {
         // Update CSS animation speeds
         document.documentElement.style.setProperty('--animation-speed', this.speedMultiplier);
     }
-    
+
     getSpeedMultiplier(speed) {
         const speedMap = { 1: 2, 2: 1.5, 3: 1, 4: 0.7, 5: 0.5 };
         return speedMap[speed] || 1;
     }
-    
+
     updateSpeedIndicator(speed) {
         const speedNames = { 1: 'Slowest', 2: 'Slow', 3: 'Normal', 4: 'Fast', 5: 'Fastest' };
         this.speedIndicator.textContent = `Speed: ${speedNames[speed]} (${speed})`;
     }
-    
+
     delay(ms) {
         return new Promise(resolve => setTimeout(resolve, ms / this.speedMultiplier));
     }
